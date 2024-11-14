@@ -1,0 +1,451 @@
+📝 Descrição
+Para fixar os conceitos de SQL, nesse projeto, iremos executar várias queries em um banco de dados já existente, o LinkeDriven!
+Este banco é de uma plataforma de busca de empregos, onde conectam-se empresas e potenciais canditados para as vagas.
+Recursos
+Script de criação do banco
+Crie um banco de dados chamado linkedriven através do PGAdmin.
+Abra a Query Tool nesse bando, copie o código abaixo e o execute integralmente para criar todas as tabelas necessárias para o projeto.
+-- CITIES ----------------------------------------------------------------------- 
+CREATE TABLE cities (
+	id SERIAL PRIMARY KEY,
+	name TEXT
+);
+
+INSERT INTO cities (id, name) VALUES 
+	(1, 'Belo Horizonte'),
+	(2, 'Fortaleza'),
+	(3, 'Rio de Janeiro'),
+	(4, 'Salvador'),
+	(5, 'São Paulo');
+	
+SELECT pg_catalog.setval('cities_id_seq', 5, true);
+
+-- USERS ------------------------------------------------------------------------
+CREATE TABLE users (
+	id SERIAL PRIMARY KEY,
+	name TEXT,
+	email TEXT,
+	password TEXT,
+	birthdate DATE,
+	image_url TEXT,
+	city_id INTEGER
+);
+
+INSERT INTO users (id, name, email, password, birthdate, image_url, city_id) VALUES
+	(1, 'Gabriela', 'gseson0@google.nl', 'L5fLjIAte', '1964-11-08', 'http://dummyimage.com/142x100.png/dddddd/000000', 5),
+	(2, 'Susana', 'skeilloh1@berkeley.edu', 'K6RFi7pCkM', '1993-01-01', 'http://dummyimage.com/117x100.png/ff4444/ffffff', 1),
+	(3, 'Kelly', 'kbohling2@nydailynews.com', 'ngv4qIjHJh', '1993-04-26', 'http://dummyimage.com/152x100.png/ff4444/ffffff', 2),
+	(4, 'Rubens', 'rcantuaf@51.la', 'te3pcy', '1981-04-08', 'http://dummyimage.com/103x100.png/5fa2dd/ffffff', 2),
+	(5, 'Eduardo', 'wdundin4@cbsnews.com', 's3C2okBDrpTw', '1960-09-13', 'http://dummyimage.com/134x100.png/cc0000/ffffff', 3),
+	(6, 'Roberta', 'bsimonel5@discuz.net', 'x8dFCo8CHQB', '1973-03-07', 'http://dummyimage.com/225x100.png/5fa2dd/ffffff', 4),
+	(7, 'Carlos', 'cfilde6@examiner.com', 'R2NC6II0', '1997-04-12', 'http://dummyimage.com/204x100.png/dddddd/000000', 5),
+	(8, 'Leila', 'leilaz7@theguardian.com', 'qmtAW1AbBJT', '1993-11-24', 'http://dummyimage.com/155x100.png/ff4444/ffffff', 1),
+	(9, 'Amanda', 'chanwright8@statcounter.com', 'AiPbTTLw3cF', '1973-10-06', 'http://dummyimage.com/144x100.png/cc0000/ffffff', 3),
+  (10, 'Sérgio', 'sluparti9@spiegel.de', 'XNb30I4', '1983-01-30', 'http://dummyimage.com/200x100.png/ff4444/ffffff', 2);
+
+SELECT pg_catalog.setval('users_id_seq', 10, true);
+
+-- COMPANIES --------------------------------------------------------------------
+CREATE TABLE companies (
+	id SERIAL PRIMARY KEY, 
+	name TEXT, 
+	image_url TEXT
+);
+
+INSERT INTO companies (id, name, image_url) VALUES 
+	(1, 'Carrefour', 'http://dummyimage.com/248x100.png/5fa2dd/ffffff'),
+	(2, 'Driven', 'http://dummyimage.com/248x100.png/5fa2dd/ffffff'),
+	(3, 'Gogle', 'http://dummyimage.com/118x100.png/dddddd/000000'),
+	(4, 'IBM', 'http://dummyimage.com/113x100.png/cc0000/ffffff'),
+	(5, 'Microsoft', 'http://dummyimage.com/134x100.png/cc0000/ffffff'),
+	(6, 'Nubank', 'http://dummyimage.com/166x100.png/cc0000/ffffff'),
+	(7, 'Quinto Andar', 'http://dummyimage.com/214x100.png/5fa2dd/ffffff'),
+	(8, 'Responde Aí', 'http://dummyimage.com/192x100.png/dddddd/000000'),
+	(9, 'Valve', 'http://dummyimage.com/111x100.png/ff4444/ffffff');
+	
+SELECT pg_catalog.setval('companies_id_seq', 9, true);
+
+-- COURSES ----------------------------------------------------------------------
+CREATE TABLE courses (
+	id SERIAL PRIMARY KEY,
+	name TEXT
+);
+
+INSERT INTO courses (id, name) VALUES 
+	(1, 'Administração'),
+	(2, 'Ciência da Computação'),
+	(3, 'Engenharia de Software'),
+	(4, 'Filosofia'),
+	(5, 'Marketing');
+
+SELECT pg_catalog.setval('courses_id_seq', 5, true);
+
+-- ROLES ------------------------------------------------------------------------
+CREATE TABLE roles (
+	id SERIAL PRIMARY KEY,
+	name TEXT
+);
+
+INSERT INTO roles (id, name) VALUES 
+	(1, 'Engenheiro de Software Junior'),
+	(2, 'Engenheiro de Software Pleno'),
+	(3, 'Engenheiro de Software Sênior'),
+	(4, 'Scrum Master'),
+	(5, 'CTO');
+
+SELECT pg_catalog.setval('roles_id_seq', 5, true);
+
+-- SCHOOLS ----------------------------------------------------------------------
+CREATE TABLE schools (
+	id SERIAL PRIMARY KEY,
+	name TEXT, 
+	image_url TEXT
+);
+
+INSERT INTO schools (id, name, image_url) VALUES 
+	(1, 'Driven Education', 'http://dummyimage.com/109x100.png/dddddd/000000'),
+	(2, 'Universidade de São Paulo', 'http://dummyimage.com/146x100.png/ff4444/ffffff'),
+	(3, 'Universidade Federal do Rio de Janeiro', 'http://dummyimage.com/117x100.png/cc0000/ffffff'),
+	(4, 'Universidade Estadual de Londrina', 'http://dummyimage.com/161x100.png/ff4444/ffffff'),
+	(5, 'Pontífica Universidade Católica', 'http://dummyimage.com/214x100.png/5fa2dd/ffffff');
+
+SELECT pg_catalog.setval('schools_id_seq', 5, true);
+
+-- TESTIMONIALS -----------------------------------------------------------------
+CREATE TABLE testimonials (
+	id SERIAL PRIMARY KEY,
+	writer_id INTEGER, 
+	recipient_id INTEGER, 
+	message TEXT,
+	publication_date DATE
+);
+
+INSERT INTO testimonials (id, writer_id, recipient_id, message, publication_date) VALUES 
+	(1, 1, 2, 'Adorei trabalhar com a Susana', '2006-07-28'),
+	(2, 2, 3, 'Amei trabalhar com a Kelly', '2007-05-20'),
+	(3, 3, 4, 'Gostei de trabalhar com o Rubens', '2022-06-18'),
+	(4, 4, 5, 'Odiei trabalhar com o Eduardo', '2015-07-28'),
+	(5, 5, 6, 'Achei legal trabalhar com a Roberta', '2018-04-05'),
+	(6, 6, 7, 'Foi incrível trabalhar com o Carlos', '2017-01-30'),
+	(7, 7, 8, 'Não gostei de trabalhar com a Leila', '2016-03-18'),
+	(8, 8, 9, 'Prefiro evitar trabalhar com a Amanda', '2003-09-03'),
+	(9, 9, 1, 'Bacana trabalhar com a Gabriela', '2009-11-27'),
+	(10, 9, 5, 'Foi maneiro trabalhar com o Eduardo', '2012-12-09');
+
+SELECT pg_catalog.setval('testimonials_id_seq', 10, true);
+	
+-- EDUCATION --------------------------------------------------------------------
+CREATE TABLE educations (
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER,
+	school_id INTEGER,
+	course_id INTEGER,
+	start_date DATE,
+	end_date DATE,
+	status TEXT
+);
+
+INSERT INTO educations (id, user_id, school_id, course_id, start_date, end_date, status) VALUES 
+	(1, 1, 1, 5, '2019-01-12', '2018-08-24', 'finished'),
+	(2, 1, 2, 4, '2024-03-05', '2027-07-23', 'ongoing'),
+	(3, 2, 3, 3, '2008-08-18', '2010-09-30', 'finished'),
+	(4, 2, 5, 1, '2017-06-19', '2020-07-22', 'finished'),
+	(5, 3, 4, 2, '2020-07-07', '2022-02-08', 'finished'),
+	(6, 5, 5, 1, '2006-08-19', '2010-10-15', 'finished'),
+	(7, 5, 1, 2, '2017-03-13', '2018-03-12', 'finished'),
+	(8, 5, 1, 3, '2018-03-13', '2019-03-12', 'finished'),
+	(9, 5, 2, 4, '2023-01-06', '2029-01-22', 'ongoing'),
+	(10, 6, 3, 3, '2014-05-29', '2016-05-29', 'finished'),
+	(11, 6, 4, 2, '2020-08-19', '2026-09-05', 'ongoing'),
+	(12, 7, 5, 1, '2024-03-14', '2028-12-21', 'ongoing'),
+	(13, 7, 1, 5, '2023-10-28', '2030-11-06', 'ongoing'),
+	(14, 8, 2, 4, '1998-12-08', '2001-07-07', 'finished'),
+	(15, 9, 3, 3, '2024-03-01', '2027-09-05', 'ongoing'),
+	(16, 10, 4, 2, '2007-04-04', '2010-08-29', 'finished'),
+	(17, 10, 5, 1, '2017-06-19', '2020-07-22', 'finished'),
+	(18, 10, 4, 2, '2023-11-11', '2026-12-14', 'ongoing');
+	
+
+SELECT pg_catalog.setval('educations_id_seq', 18, true);
+
+-- EXPERIENCES ------------------------------------------------------------------
+CREATE TABLE experiences (
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER,
+	company_id INTEGER,
+	role_id INTEGER,
+	start_date DATE,
+	end_date DATE
+);
+
+INSERT INTO experiences (id, user_id, company_id, role_id, start_date, end_date) VALUES 
+	(1, 1, 1, 1, '2001-11-18', '2015-04-28'),
+	(2, 1, 2, 2, '2015-05-10', '2020-01-17'),
+	(3, 1, 3, 3, '2020-06-12', NULL),
+	(4, 2, 4, 4, '2015-12-17', '2016-12-17'),
+	(5, 2, 5, 5, '2018-08-02', '2022-10-14'),
+	(6, 3, 6, 1, '2010-03-03', '2019-12-17'),
+	(7, 3, 7, 2, '2020-02-12', NULL),
+	(8, 4, 8, 3, '2015-12-28', NULL),
+	(9, 5, 9, 4, '2005-05-17', '2008-08-08'),
+	(10, 5, 1, 5, '2009-10-12', '2020-01-17'),
+	(11, 5, 2, 1, '2020-05-29', '2023-02-20'),
+	(12, 5, 3, 2, '2023-03-01', NULL),
+	(13, 6, 4, 3, '2010-03-04', '2019-09-18'),
+	(14, 6, 5, 4, '2020-12-05', '2024-05-12'),
+	(15, 7, 6, 5, '2004-02-10', NULL),
+	(16, 9, 7, 1, '2016-08-12', '2019-08-17'),
+	(17, 10, 8, 2, '2005-08-10', '2008-07-17'),
+	(18, 10, 9, 3, '2008-06-08', '2012-06-19'),
+	(19, 10, 1, 4, '2013-04-30', '2018-06-05'),
+	(20, 10, 2, 5, '2019-10-09', '2021-08-01'),
+	(21, 10, 3, 1, '2021-09-12', NULL);
+	
+SELECT pg_catalog.setval('experiences_id_seq', 21, true);
+
+-- JOBS -------------------------------------------------------------------------
+CREATE TABLE jobs(
+	id SERIAL PRIMARY KEY,
+	company_id INTEGER,
+	role_id INTEGER,
+	description TEXT,
+	salary INTEGER,
+	active BOOLEAN
+);
+
+INSERT INTO jobs (id, company_id, role_id, description, salary, active) VALUES
+	(1, 1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 1000, true),
+	(2, 1, 2, 'Vivamus in dolor volutpat, iaculis ex eget, imperdiet quam.', 3000, true),
+	(3, 1, 3, 'In sodales gravida mollis.', 6000, false),
+	(4, 1, 4, 'Sed ultrices odio sed enim semper, ut finibus nisi vestibulum.', 1500, true),
+	(5, 2, 5, 'Mauris eu lorem rhoncus, varius odio et, fringilla diam.', 9000, true),
+	(6, 2, 1, 'Vestibulum dolor mi, consequat nec eleifend sed, iaculis eget eros. ', 3200, true),
+	(7, 3, 2, 'Aliquam erat volutpat. Quisque ut luctus metus.', 4500, true),
+	(8, 3, 3, 'Nullam in justo non mauris elementum dapibus sed quis nisi.', 6500, true),
+	(9, 3, 4, 'Phasellus bibendum eros eu ligula posuere convallis.', 1200, true),
+	(10, 4, 5, 'Nunc ac pulvinar ligula. Nulla facilisi.', 7500, false),
+	(11, 4, 1, 'Vivamus auctor, mauris non feugiat tristique, orci lorem aliquet ex.', 2400, false),
+	(12, 5, 2, 'Cras sodales egestas metus vel fermentum.', 4300, true),
+	(13, 6, 3, 'Aliquam in ante vel felis rhoncus viverra.', 7000, false),
+	(14, 8, 4, 'Nunc posuere odio at mauris viverra lobortis.', 2200, true),
+	(15, 8, 5, 'Praesent vulputate faucibus volutpat.', 8700, true),
+	(16, 8, 1, 'Donec non consectetur turpis.', 1900, true),
+	(17, 8, 2, 'Phasellus accumsan pulvinar gravida. ', 4200, true),
+	(18, 9, 3, 'Ut posuere hendrerit pellentesque. Integer ut mauris sem.', 6400, false),
+	(19, 9, 4, 'Vivamus efficitur ex in dolor congue, sit amet scelerisque augue malesuada.', 2300, true),
+	(20, 9, 5, 'Nulla facilisi. Proin id porttitor leo, eu fermentum erat.', 8100, true);
+
+SELECT pg_catalog.setval('jobs_id_seq', 20, true);
+
+-- APPLICANTS -------------------------------------------------------------------
+CREATE TABLE applicants (
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER,
+	job_id INTEGER
+);
+
+INSERT INTO applicants (id, user_id, job_id) VALUES 
+	(1, 1, 5),
+	(2, 1, 1),
+	(3, 1, 6),
+	(4, 3, 8),
+	(5, 3, 7),
+	(6, 5, 5),
+	(7, 5, 8),
+	(8, 6, 15),
+	(9, 6, 15),
+	(10, 7, 16),
+	(11, 7, 20),
+	(12, 7, 3),
+	(13, 7, 4),
+	(14, 10, 6),
+	(15, 10, 13),
+	(16, 3, 2),
+	(17, 8, 2),
+	(18, 9, 2),
+	(19, 10, 2);
+	
+SELECT pg_catalog.setval('applicants_id_seq', 19, true);
+Diagrama do banco
+📝 Instruções
+Anote todos os comandos que você executar para cada exercício. A entrega será um arquivo de texto com os comandos, que deve ser entregue no seguinte formato:
+-- Questão 01
+SELECT * FROM produtos;
+
+-- Questão 02
+SELECT * FROM produtos WHERE name = 'Batata';
+
+-- ....
+Cada exercício possui o resultado esperado da query, que é o que o SQL irá retornar após o seu comando. Isso serve para você verificar se o seu comando fez aquilo que era esperado! Uma vez que esteja tudo certinho, anote os comandos usados no formato acima para envio na plataforma em um arquivo de texto com extensão .sql.
+📩 Entrega
+Suba o arquivo .sql com os seus comandos em um repositório privado do seu GitHub e envie o link pela plataforma.
+✅ Exercícios
+Questão 01
+Busque empresas (companies) quaisquer, limitadas a 5.
+Resultado esperado
+ id |   name    |                    image_url
+----+-----------+-------------------------------------------------
+  1 | Carrefour | http://dummyimage.com/248x100.png/5fa2dd/ffffff
+  2 | Driven    | http://dummyimage.com/248x100.png/5fa2dd/ffffff
+  3 | Google    | http://dummyimage.com/118x100.png/dddddd/000000
+  4 | IBM       | http://dummyimage.com/113x100.png/cc0000/ffffff
+  5 | Microsoft | http://dummyimage.com/134x100.png/cc0000/ffffff
+(5 linhas)
+Questão 02
+Busque a empresa (companies) com nome Driven.
+Resultado esperado
+ id |  name  |                    image_url
+----+--------+-------------------------------------------------
+  2 | Driven | http://dummyimage.com/248x100.png/5fa2dd/ffffff
+(1 linha)
+Questão 03
+Adicione uma nova empresa (companies) chamada Apple, colocando uma imagem à sua escolha.
+Resultado esperado
+INSERT 0 1
+Questão 04
+A empresa recém-adicionada, Apple, decidiu que não valeu a pena criar seu perfil nesse site e decidiu removê-lo. Delete-a da lista de empresas (companies).
+Resultado esperado
+DELETE 1
+Questão 05
+A empresa Google percebeu que havia inserido o nome errado, e atualmente está registrado como Gogle. Atualize no banco para arrumar o nome da empresa.
+Resultado esperado
+UPDATE 1
+Questão 06
+Aumente o salário do emprego (jobs) de id igual à 1. Atualmente o salário é 1000, aumente para 1500.
+Resultado esperado
+UPDATE 1
+Questão 07
+A usuária (users) de nome Kelly se começou a trabalhar na empresa (companies) de nome Nubank no cargo (roles) chamado CTO. A data de início é a data de hoje, e, como ainda está na vaga, a data de fim será nula (NULL). Faça essa inserção na tabela experiences.
+Resultado esperado
+INSERT 0 1
+Questão 08
+A usuária (users) de nome Kelly fez uma aplicação para o emprego de Engenheiro de Software Pleno na empresa de nome Carrefour, mas como já foi empregada em uma vaga melhor, quer deletar essa aplicação. Delete o registro correspondente na tabela applications.
+Resultado esperado
+DELETE 1
+Questão 09
+Selecione a descrição dos 3 empregos (jobs) com maior salário, juntamente com seu id e salário.
+Resultado esperado
+ id |                        description                         | salary
+----+------------------------------------------------------------+--------
+  5 | Mauris eu lorem rhoncus, varius odio et, fringilla diam.   |   9000
+ 15 | Praesent vulputate faucibus volutpat.                      |   8700
+ 20 | Nulla facilisi. Proin id porttitor leo, eu fermentum erat. |   8100
+(3 linhas)
+Questão 10
+Busque o emprego (jobs) com menor salário, juntamente com seu id e nome da empresa.
+Resultado esperado
+ id | company_name | salary
+----+--------------+--------
+  9 | Google       |   1200
+(1 linha)
+OBS: a coluna id se refere ao id do emprego (jobs). 
+Questão 11
+Utilizando uma query, obtenha todos os usuários (users) que vivem na cidade (cities) cujo nome seja Rio de Janeiro. Utilize apelidos para os nomes de colunas ficarem como no resultado esperado.
+Resultado esperado
+ id |  name   |      city
+----+---------+----------------
+  5 | Eduardo | Rio de Janeiro
+  9 | Amanda  | Rio de Janeiro
+OBS: a coluna id se refere ao id do usuário. 
+Questão 12
+Utilizando uma query, obtenha todos os depoimentos (testimonials) cadastrados, incluindo o nome do remetente e do destinatário. Para fazer múltiplos joins com uma mesma tabela, use apelidos para cada join (ex: JOIN tabela t1).
+Resultado esperado
+ id |                message                |  writer  | recipient
+----+---------------------------------------+----------+-----------
+  1 | Adorei trabalhar com a Susana         | Gabriela | Susana
+  2 | Amei trabalhar com a Kelly            | Susana   | Kelly
+  3 | Gostei de trabalhar com o Rubens      | Kelly    | Rubens
+  4 | Odiei trabalhar com o Eduardo         | Rubens   | Eduardo
+  5 | Achei legal trabalhar com a Roberta   | Eduardo  | Roberta
+  6 | Foi incrível trabalhar com o Carlos   | Roberta  | Carlos
+  7 | Não gostei de trabalhar com a Leila   | Carlos   | Leila
+  8 | Prefiro evitar trabalhar com a Amanda | Leila    | Amanda
+  9 | Bacana trabalhar com a Gabriela       | Amanda   | Gabriela
+ 10 | Foi maneiro trabalhar com o Eduardo   | Amanda   | Eduardo
+(10 linhas)
+OBS: a coluna id se refere ao id do depoimento.
+Questão 13
+Utilizando uma query, obtenha todos os cursos (courses) que o usuário com id 5 já finalizou, incluindo o nome da escola. O que indica que um usuário terminou um curso é o campo status da tabela educations, que deve estar como finished.
+Resultado esperado
+ id |  name   |         course         |             schools             |  end_date
+----+---------+------------------------+---------------------------------+------------
+  1 | Eduardo | Administração          | Pontífica Universidade Católica | 2010-10-15
+  2 | Eduardo | Ciência da Computação  | Driven Education                | 2018-03-12
+  3 | Eduardo | Engenharia de Software | Driven Education                | 2019-03-12
+(3 linhas)
+OBS: a coluna id se refere ao id do curso.
+Questão 14
+Utilizando uma query, obtenha as empresas (companies) para as quais o usuário com id 10 já trabalhou, mas não trabalha mais atualmente. Para filtrar quem não trabalha atualmente, utilize o campo end_date da tabela experiences. Se ele estiver diferente de null (IS NOT NULL), significa que a pessoa ainda já encerrou a experiência dela na empresa, ou seja, não trabalha mais lá.
+Resultado esperado
+ id |  name  |             role              |   company   | start_date
+----+--------+-------------------------------+-------------+------------
+ 10 | Sérgio | Engenheiro de Software Pleno  | Responde Aí | 2005-08-10
+ 10 | Sérgio | Engenheiro de Software Sênior | Valve       | 2008-06-08
+ 10 | Sérgio | Scrum Master                  | Carrefour   | 2013-04-30
+ 10 | Sérgio | CTO                           | Driven      | 2019-10-09
+(4 linhas)
+OBS: a coluna id se refere ao id do usuário.
+Questão 15
+Utilizando uma única query, obtenha a lista das diferentes escolas (schools) e cursos (courses) onde estudaram as pessoas que estão aplicando pra posição (roles) de Engenheiro de Software Pleno na empresa (companies) com id 1. Só devem ser consideradas as vagas que estiverem ativas, ou seja, quando o campo active da tabela jobs estiver true.
+Resultado esperado
+ id |                 school                 |         course         |  company  |            roles
+----+----------------------------------------+------------------------+-----------+------------------------------
+  4 | Universidade Estadual de Londrina      | Ciência da Computação  | Carrefour | Engenheiro de Software Pleno
+  5 | Pontífica Universidade Católica        | Administração          | Carrefour | Engenheiro de Software Pleno
+  4 | Universidade Estadual de Londrina      | Ciência da Computação  | Carrefour | Engenheiro de Software Pleno
+  3 | Universidade Federal do Rio de Janeiro | Engenharia de Software | Carrefour | Engenheiro de Software Pleno
+  2 | Universidade de São Paulo              | Filosofia              | Carrefour | Engenheiro de Software Pleno
+(5 linhas)
+OBS: a coluna id se refere ao id da escola.
+Questão 16
+Utilizando uma única query, obtenha a quantidade de experiencias (experiences) atuais, ou seja, com end_date diferente de NULL. Para isso, você só precisa usar uma função agregadora, sem WHERE.
+Resultado esperado
+|--current_experiences--|
+-------------------------
+           15
+(1 linha)
+Questão 17
+Utilizando uma única query, obtenha a quantidade de graduações (educations) por usuário, incluindo o seu id e o seu name. Ordene da maior quantidade de educations para a menor.
+Resultado esperado
+ id |   name   | educations
+----+----------+------------
+  5 | Eduardo  |          4
+ 10 | Sérgio   |          3
+  6 | Roberta  |          2
+  1 | Gabriela |          2
+  2 | Susana   |          2
+  7 | Carlos   |          2
+  8 | Leila    |          1
+  9 | Amanda   |          1
+  3 | Kelly    |          1
+(9 linhas)
+OBS: a coluna id se refere ao id do usuário.
+Questão 18
+Utilizando uma única query, obtenha a quantidade de depoimentos (testimonials) que o usuário com id 9 escreveu, incluindo o seu nome. 
+Resultado esperado
+ writer | testimonialCount
+--------+------------------
+ Amanda |                2
+(1 linha)
+OBS: a coluna id se refere ao id do usuário.
+Questão 19
+Utilizando uma única query, obtenha o maior salário das vagas (jobs) ativas (active sendo true) e o nome das posições (roles) dessas vagas, ordenadas do menor para o maior salário. Você pode ordenar uma busca pelo valor de uma função agregadora usando o alias que deu a ela.
+Resultado esperado
+ maximum_salary |             role              
+----------------+-------------------------------
+           2300 | Scrum Master                  
+           3200 | Engenheiro de Software Junior 
+           4500 | Engenheiro de Software Pleno  
+           6500 | Engenheiro de Software Sênior 
+           9000 | CTO                           
+(5 linhas)
+Questão 20
+Utilizando uma única query, obtenha os 3 cursos (courses) e escolas (schools) com a maior quantidade de alunos (educations) que finalizaram o curso (status finished). Caso necessário, você pode dar GROUP BY em mais de uma coluna por vez, basta separá-las por virgula.
+Lembrando que a ordem dos comandos é:  SELECT ⇒ FROM ⇒ JOIN ⇒ WHERE ⇒ GROUP BY ⇒ ORDER BY ⇒ LIMIT.
+Resultado esperado
+                 school                 |         course         | student_count
+----------------------------------------+------------------------+---------------
+ Pontífica Universidade Católica        | Administração          |             3
+ Universidade Estadual de Londrina      | Ciência da Computação  |             2
+ Universidade Federal do Rio de Janeiro | Engenharia de Software |             2
+(3 linhas)
